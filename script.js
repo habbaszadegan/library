@@ -88,7 +88,7 @@ function createDeleteButton (row, libArray) {
     deleteBook.textContent = 'Delete';
     row.appendChild(deleteBook);
     const rowIndex = row.rowIndex;
-    console.log(rowIndex);
+    console.log(rowIndex - 1);
     deleteBook.addEventListener('click', () => {
         libArray.splice(rowIndex - 1, 1);
         console.table(libArray);
