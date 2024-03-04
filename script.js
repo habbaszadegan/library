@@ -10,11 +10,12 @@ const read = document.querySelector('#read');
 
 const library = [];
 
-function Book(title, author, pages, read) {
+function Book(title, author, pages, read, index) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
+    this.index = index;
     // this.info = () => {
     //     return `${title} by ${author}, ${pages}, ${read}`;
     // }
@@ -30,7 +31,6 @@ function addBookModal() {
     } else {
         readStatus = 'No';
     }
-
     return library.push(new Book(addTitle, addAuthor, addPages, readStatus));
 }
 
@@ -50,6 +50,7 @@ function displayBook(lib) {
         }
         newRow = document.createElement('tr');
         newRow.setAttribute('data-index', lib.length - 1);
+        console.log(newRow);
         for (const property in book) {
             const newCell = document.createElement('td');
             newCell.textContent = book[property];
@@ -57,8 +58,8 @@ function displayBook(lib) {
             createReadButton (book, property, newCell);
         }
         table.appendChild(newRow);
+        createDeleteButton(newRow, lib, book);
     }
-    createDeleteButton(newRow, lib);
 }
 
 function createReadButton (bo, prop, cell) {
@@ -67,16 +68,23 @@ function createReadButton (bo, prop, cell) {
         readBtn.textContent = bo[prop];
         cell.textContent = '';
         cell.appendChild(readBtn);
+        readBtn.addEventListener('click', () => {
+            if (readBtn.textContent === 'Yes') {
+                readBtn.textContent = 'No';
+            } else {
+                readBtn.textContent = 'Yes';
+            }
+        })
     }
 }
 
-function createDeleteButton (row, libArray) {
+function createDeleteButton (row, libArray, bo) {
     const deleteBook = document.createElement('button');
     deleteBook.textContent = 'Delete';
     row.appendChild(deleteBook);
     deleteBook.addEventListener('click', () => {
-        libArray.splice(libArray.length - 1, 1);
-        console.log(libArray);
+        libArray.splice(libArray[bo], 1);
+        console.table(libArray);
         row.remove();
     })
 }
