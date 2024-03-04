@@ -22,6 +22,11 @@ function Book(title, author, pages, read, index) {
 }
 
 function addBookModal() {
+    for(book of library) {
+        if(book.title === title.value) {
+            return;
+        }
+    }
     const addTitle = title.value;
     const addAuthor = author.value;
     const addPages = pages.value;
@@ -58,7 +63,7 @@ function displayBook(lib) {
             createReadButton (book, property, newCell);
         }
         table.appendChild(newRow);
-        createDeleteButton(newRow, lib, book);
+        createDeleteButton(newRow, lib);
     }
 }
 
@@ -78,12 +83,14 @@ function createReadButton (bo, prop, cell) {
     }
 }
 
-function createDeleteButton (row, libArray, bo) {
+function createDeleteButton (row, libArray) {
     const deleteBook = document.createElement('button');
     deleteBook.textContent = 'Delete';
     row.appendChild(deleteBook);
+    const rowIndex = row.rowIndex;
+    console.log(rowIndex);
     deleteBook.addEventListener('click', () => {
-        libArray.splice(libArray[bo], 1);
+        libArray.splice(rowIndex - 1, 1);
         console.table(libArray);
         row.remove();
     })
