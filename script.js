@@ -54,8 +54,6 @@ function displayBook(lib) {
             continue;
         }
         newRow = document.createElement('tr');
-        newRow.setAttribute('data-index', lib.length - 1);
-        console.log(newRow);
         for (const property in book) {
             const newCell = document.createElement('td');
             newCell.textContent = book[property];
@@ -87,10 +85,13 @@ function createDeleteButton (row, libArray) {
     const deleteBook = document.createElement('button');
     deleteBook.textContent = 'Delete';
     row.appendChild(deleteBook);
-    const rowIndex = row.rowIndex;
-    console.log(rowIndex - 1);
+    const titleToDelete = row.querySelector('td').textContent;
     deleteBook.addEventListener('click', () => {
-        libArray.splice(rowIndex - 1, 1);
+        for (let i = 0; i < libArray.length; i++) {
+            if (libArray[i].title === titleToDelete) {
+                libArray.splice(i, 1);
+            }
+        }
         console.table(libArray);
         row.remove();
     })
