@@ -87,6 +87,7 @@ function createDeleteButton (row, libArray) {
     row.appendChild(deleteBook);
     const titleToDelete = row.querySelector('td').textContent;
     deleteBook.addEventListener('click', () => {
+        // const filteredLibrary = libArray.filter((book, index) => index !== row);
         for (let i = 0; i < libArray.length; i++) {
             if (libArray[i].title === titleToDelete) {
                 libArray.splice(i, 1);
